@@ -1,0 +1,111 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android")
+}
+
+if (!file("local.gradle").exists()) {
+    exec {
+        commandLine "sh"
+        args = ["-c", "cp local.gradle.example local.gradle"]
+    }
+}
+
+apply from: "local.gradle"
+
+android {
+    namespace 'com.stocksapp'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.stocksapp"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            debuggable true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.2"
+    }
+}
+
+dependencies {
+
+    implementation project(':network')
+
+    implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
+
+    // Compose
+    implementation platform("androidx.compose:compose-bom:$rootProject.composeBomVersion")
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.material3:material3"
+    implementation 'androidx.activity:activity-compose'
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleExtensionsVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.lifecycleExtensionsVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$rootProject.lifecycleExtensionsVersion")
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+    implementation "com.google.accompanist:accompanist-navigation-animation:$navAmimationVersion"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    implementation "androidx.hilt:hilt-navigation-compose:$rootProject.hiltNavVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // OkHttp - socket
+    implementation("com.squareup.okhttp3:okhttp:$rootProject.okHttp3Version")
+
+    // OkHttp3
+    implementation("com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpLoggingVersion")
+
+    // For setting system bar color
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$rootProject.systemUiControllerVersion"
+
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.jUnitExtVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
+}
