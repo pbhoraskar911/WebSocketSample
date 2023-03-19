@@ -1,8 +1,10 @@
 package com.stocksapp.ui.holdings.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stocksapp.domain.HoldingsUseCase
+import com.stocksapp.network.data.Holdings
 import com.stocksapp.network.data.HoldingsResponse
 import com.stocksapp.network.network.NetworkResult
 import com.stocksapp.util.ProgressBarState
@@ -43,6 +45,26 @@ class HoldingsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun calculatePL(holding: Holdings): Double {
+        return holdingsUseCase.calculatePL(holding)
+    }
+
+    fun calculateTotalCurrentValue(listOfHoldings: List<Holdings>): Double {
+        return holdingsUseCase.calculateTotalCurrentValue(listOfHoldings)
+    }
+
+    fun calculateTotalPL(listOfHoldings: List<Holdings>): Double {
+        return holdingsUseCase.calculateTotalPL(listOfHoldings)
+    }
+
+    fun calculateTotalInvestment(listOfHoldings: List<Holdings>): Double {
+        return holdingsUseCase.calculateTotalInvestment(listOfHoldings)
+    }
+
+    fun calculateTodayProfitLoss(listOfHoldings: List<Holdings>): Double {
+        return holdingsUseCase.calculateTodayProfitLoss(listOfHoldings)
     }
 
 }

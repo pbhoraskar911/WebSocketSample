@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "StocksApp"
 include ':app'
 include ':network'
+include ':computations'

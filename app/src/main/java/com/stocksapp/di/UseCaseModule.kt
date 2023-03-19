@@ -1,5 +1,6 @@
 package com.stocksapp.di
 
+import com.computations.PLLogicInterface
 import com.stocksapp.data.repository.HoldingsRepository
 import com.stocksapp.data.repository.StocksAppRepository
 import com.stocksapp.domain.HoldingsUseCase
@@ -30,8 +31,9 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideHoldingsUseCase(
-        holdingsRepository: HoldingsRepository
+        holdingsRepository: HoldingsRepository,
+        plLogicInterface: PLLogicInterface
     ): HoldingsUseCase {
-        return HoldingsUseCaseImpl(holdingsRepository)
+        return HoldingsUseCaseImpl(holdingsRepository, plLogicInterface)
     }
 }

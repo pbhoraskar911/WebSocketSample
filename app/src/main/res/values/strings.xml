@@ -2,4 +2,11 @@
     <string name="app_name">StocksApp</string>
     <string name="stocks_app">Stocks</string>
     <string name="holdings">Holdings</string>
+    <string name="rupee_symbol">\u20B9</string>
+    <string name="string_current_value">Current Value:</string>
+    <string name="string_total_investment">Total Investment:</string>
+    <string name="string_today_profit_loss">Today\'s Profit &amp; Loss: </string>
+    <string name="string_profit_loss">Profit &amp; Loss: </string>
+    <string name="string_ltp_label">LTP: &#160;</string>
+    <string name="string_profit_loss_label">P/L:&#160;</string>
 </resources>

@@ -76,11 +76,21 @@ fun NavGraphBuilder.addStocksListScreen(navController: NavHostController) {
             }
         }
     ) {
-
         val holdingsViewModel: HoldingsViewModel = hiltViewModel()
-        HoldingsScreen(holdingsViewModel)
-
-//        val stocksListViewModel: StocksListViewModel = hiltViewModel()
-//        StocksListScreen(viewModel = stocksListViewModel)
+        HoldingsScreen(viewModel = holdingsViewModel,
+            calculatePL = { holding -> holdingsViewModel.calculatePL(holding) },
+            calculateTotalCurrentValue = {
+                listOfHoldings -> holdingsViewModel.calculateTotalCurrentValue(listOfHoldings)
+            },
+            calculateTotalPL = {
+                listOfHoldings -> holdingsViewModel.calculateTotalPL(listOfHoldings)
+            },
+            calculateTotalInvestment = {
+                    listOfHoldings -> holdingsViewModel.calculateTotalInvestment(listOfHoldings)
+            },
+            calculateTodayProfitLoss = {
+                    listOfHoldings -> holdingsViewModel.calculateTodayProfitLoss(listOfHoldings)
+            }
+        )
     }
 }
