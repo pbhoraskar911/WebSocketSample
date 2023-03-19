@@ -18,9 +18,9 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.stocksapp.ui.holdings.screen.HoldingsScreen
+import com.stocksapp.ui.holdings.viewmodel.HoldingsViewModel
 import com.stocksapp.ui.navigation.Screen
-import com.stocksapp.ui.stockslist.presentation.screen.StocksListScreen
-import com.stocksapp.ui.stockslist.presentation.viewmodel.StocksListViewModel
 import com.stocksapp.util.Constants.NAV_ANIMATION_DURATION
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,7 +76,11 @@ fun NavGraphBuilder.addStocksListScreen(navController: NavHostController) {
             }
         }
     ) {
-        val stocksListViewModel: StocksListViewModel = hiltViewModel()
-        StocksListScreen(viewModel = stocksListViewModel)
+
+        val holdingsViewModel: HoldingsViewModel = hiltViewModel()
+        HoldingsScreen(holdingsViewModel)
+
+//        val stocksListViewModel: StocksListViewModel = hiltViewModel()
+//        StocksListScreen(viewModel = stocksListViewModel)
     }
 }

@@ -1,6 +1,9 @@
 package com.stocksapp.di
 
+import com.stocksapp.data.repository.HoldingsRepository
 import com.stocksapp.data.repository.StocksAppRepository
+import com.stocksapp.domain.HoldingsUseCase
+import com.stocksapp.domain.HoldingsUseCaseImpl
 import com.stocksapp.domain.StocksDataUseCase
 import com.stocksapp.domain.StocksDataUseCaseImpl
 import dagger.Module
@@ -22,5 +25,13 @@ object UseCaseModule {
         repository: StocksAppRepository
     ): StocksDataUseCase {
         return StocksDataUseCaseImpl(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHoldingsUseCase(
+        holdingsRepository: HoldingsRepository
+    ): HoldingsUseCase {
+        return HoldingsUseCaseImpl(holdingsRepository)
     }
 }

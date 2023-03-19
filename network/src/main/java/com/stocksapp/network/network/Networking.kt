@@ -1,6 +1,7 @@
 package com.stocksapp.network.network
 
 import com.stocksapp.network.utils.NetworkConstants.BASE_URL
+import com.stocksapp.network.utils.NetworkConstants.BASE_URL_STOCKS_HOLDINGS
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,7 +17,7 @@ object Networking {
 
     fun create(): NetworkService {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_STOCKS_HOLDINGS)
             .addConverterFactory(GsonConverterFactory.create())
             .client(getOkHttpClientBuilder().build())
             .build()

@@ -24,7 +24,7 @@ fun ProgressIndicatorMolecule(isLoading: Boolean) {
                 .height(100.dp)
                 .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.tertiary)
         }

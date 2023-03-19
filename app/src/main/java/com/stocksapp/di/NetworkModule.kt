@@ -2,6 +2,8 @@ package com.stocksapp.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.stocksapp.network.network.NetworkService
+import com.stocksapp.network.network.Networking
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +29,11 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder().build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(gson: Gson): NetworkService {
+        return Networking.create()
     }
 }

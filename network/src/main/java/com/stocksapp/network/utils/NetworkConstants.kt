@@ -6,5 +6,6 @@ package com.stocksapp.network.utils
 object NetworkConstants {
 
     const val BASE_URL = "wss://ws-feed.pro.coinbase.com"
+    const val BASE_URL_STOCKS_HOLDINGS = "https://run.mocky.io/"
 
 }
