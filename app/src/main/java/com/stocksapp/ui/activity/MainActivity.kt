@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.stocksapp.network.connectivity.ConnectivityObserver
 import com.stocksapp.ui.holdings.screen.HoldingsScreen
 import com.stocksapp.ui.holdings.viewmodel.HoldingsViewModel
 import com.stocksapp.ui.navigation.Screen
@@ -30,10 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var connectivityObserver: ConnectivityObserver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        connectivityObserver = NetworkConnectivityObserver(context = applicationContext)
         setContent {
             MaterialTheme {
+//                val status by connectivityObserver.observe().collectAsState(
+//                    initial = ConnectivityObserver.Status.Unavailable
+//                )
                 MainScreenComposable()
             }
         }

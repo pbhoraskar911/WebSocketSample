@@ -1,16 +1,21 @@
 package com.stocksapp.ui.holdings.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stocksapp.data.state.HoldingsState
 import com.stocksapp.domain.HoldingsUseCase
+import com.stocksapp.network.connectivity.ConnectionState
+import com.stocksapp.network.connectivity.ConnectivityObserver
 import com.stocksapp.network.data.Holdings
-import com.stocksapp.network.data.HoldingsResponse
 import com.stocksapp.network.network.NetworkResult
 import com.stocksapp.util.ProgressBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,14 +24,32 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HoldingsViewModel @Inject constructor(
-    private val holdingsUseCase: HoldingsUseCase
+    private val holdingsUseCase: HoldingsUseCase,
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _loadingState = MutableStateFlow<ProgressBarState>(ProgressBarState.Idle)
     val loadingState: StateFlow<ProgressBarState> get() = _loadingState
 
+    private val _connectionState = MutableStateFlow(false)
+    val connectionState: StateFlow<Boolean> get() = _connectionState
+
     private val _holdingsResponseState = MutableStateFlow(HoldingsState())
     val holdingsResponseState: StateFlow<HoldingsState> get() = _holdingsResponseState
+
+    init {
+        observeConnectivity()
+    }
+
+    private fun observeConnectivity() {
+        connectivityObserver.connectionState
+            .distinctUntilChanged()
+            .map { it === ConnectionState.Available }
+            .onEach {
+                _connectionState.value = it
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun fetchHoldings() = viewModelScope.launch {
         holdingsUseCase.getHoldings().collect {
@@ -66,10 +89,4 @@ class HoldingsViewModel @Inject constructor(
     fun calculateTodayProfitLoss(listOfHoldings: List<Holdings>): Double {
         return holdingsUseCase.calculateTodayProfitLoss(listOfHoldings)
     }
-
 }
-
-data class HoldingsState(
-    val progressBarState: ProgressBarState = ProgressBarState.Idle,
-    val holdingsResponse: HoldingsResponse? = null
-)

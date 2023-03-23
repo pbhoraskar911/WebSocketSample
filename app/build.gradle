@@ -60,8 +60,8 @@ android {
 
 dependencies {
 
-    implementation project(':network')
-    implementation project(':computations')
+    implementation project(':core-network')
+    implementation project(':core-computations')
 
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
 

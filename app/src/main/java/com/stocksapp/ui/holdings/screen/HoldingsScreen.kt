@@ -35,9 +35,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stocksapp.R
+import com.stocksapp.data.state.HoldingsState
 import com.stocksapp.network.data.Holdings
+import com.stocksapp.ui.compose.ConnectivityStatus
 import com.stocksapp.ui.compose.ProgressIndicatorMolecule
-import com.stocksapp.ui.holdings.viewmodel.HoldingsState
 import com.stocksapp.ui.holdings.viewmodel.HoldingsViewModel
 import com.stocksapp.ui.stockslist.presentation.screen.rememberLifecycleEvent
 import com.stocksapp.util.ProgressBarState
@@ -57,6 +58,7 @@ fun HoldingsScreen(
     val lifecycleEvent = rememberLifecycleEvent()
     val loadingState by viewModel.loadingState.collectAsStateWithLifecycle()
     val holdingsResponseState by viewModel.holdingsResponseState.collectAsStateWithLifecycle()
+    val connectivityState by viewModel.connectionState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = lifecycleEvent) {
         if (lifecycleEvent == Lifecycle.Event.ON_RESUME)
@@ -70,7 +72,8 @@ fun HoldingsScreen(
         calculateTotalCurrentValue = calculateTotalCurrentValue,
         calculateTotalPL = calculateTotalPL,
         calculateTotalInvestment,
-        calculateTodayProfitLoss
+        calculateTodayProfitLoss,
+        connectivityState = connectivityState
     )
 
 }
@@ -84,7 +87,8 @@ fun HoldingsScreenUi(
     calculateTotalCurrentValue: (List<Holdings>) -> Double,
     calculateTotalPL: (List<Holdings>) -> Double,
     calculateTotalInvestment: (List<Holdings>) -> Double,
-    calculateTodayProfitLoss: (List<Holdings>) -> Double
+    calculateTodayProfitLoss: (List<Holdings>) -> Double,
+    connectivityState: Boolean
 ) {
     Scaffold(
         topBar = {
@@ -102,14 +106,17 @@ fun HoldingsScreenUi(
                 .padding(it)
                 .background(Color.LightGray)
         ) {
-            HoldingsWidget(
-                holdingsList = holdingsResponseState.holdingsResponse?.data,
-                calculatePL = calculatePL,
-                calculateTotalCurrentValue = calculateTotalCurrentValue,
-                calculateTotalPL = calculateTotalPL,
-                calculateTotalInvestment,
-                calculateTodayProfitLoss
-            )
+            Column {
+                ConnectivityStatus(isConnected = connectivityState)
+                HoldingsWidget(
+                    holdingsList = holdingsResponseState.holdingsResponse?.data,
+                    calculatePL = calculatePL,
+                    calculateTotalCurrentValue = calculateTotalCurrentValue,
+                    calculateTotalPL = calculateTotalPL,
+                    calculateTotalInvestment,
+                    calculateTodayProfitLoss
+                )
+            }
             ProgressIndicatorMolecule(isLoading = loadingState == ProgressBarState.Loading)
         }
     }

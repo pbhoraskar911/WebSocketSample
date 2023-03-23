@@ -1,4 +1,4 @@
-package com.stocksapp.network.utils
+package com.stocksapp.network.util
 
 /**
  * Created by Pranav Bhoraskar on 3/14/23

@@ -1,7 +1,11 @@
 package com.stocksapp.di
 
+import android.app.Application
 import com.computations.PLLogicInterface
 import com.computations.PLLogicInterfaceImpl
+import com.stocksapp.network.connectivity.ConnectivityObserver
+import com.stocksapp.network.connectivity.ConnectivityObserverImpl
+import com.stocksapp.network.util.connectivityManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,4 +25,9 @@ object AppModule {
         return PLLogicInterfaceImpl()
     }
 
+    @Singleton
+    @Provides
+    fun provideConnectivityObserver(application: Application): ConnectivityObserver {
+        return ConnectivityObserverImpl(application.connectivityManager)
+    }
 }

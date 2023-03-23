@@ -11,7 +11,7 @@ ext {
     okHttpLoggingVersion = "4.10.0"
     okHttp3Version = "4.10.0"
 
-    composeBomVersion = "2022.12.00"
+    composeBomVersion = "2023.03.00"
     materialDesignVersion = "1.7.0"
 
     hiltVersion = "2.44"

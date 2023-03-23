@@ -3,7 +3,7 @@ package com.stocksapp.data.repository
 import com.google.gson.Gson
 import com.stocksapp.network.data.StocksResponse
 import com.stocksapp.network.network.NetworkResult
-import com.stocksapp.network.utils.NetworkConstants.BASE_URL
+import com.stocksapp.network.util.NetworkConstants.BASE_URL
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

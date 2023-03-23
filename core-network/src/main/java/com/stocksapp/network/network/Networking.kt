@@ -1,7 +1,6 @@
 package com.stocksapp.network.network
 
-import com.stocksapp.network.utils.NetworkConstants.BASE_URL
-import com.stocksapp.network.utils.NetworkConstants.BASE_URL_STOCKS_HOLDINGS
+import com.stocksapp.network.util.NetworkConstants.BASE_URL_STOCKS_HOLDINGS
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
